@@ -1,0 +1,28 @@
+page-active-players {
+  ion-item {
+    padding: 2px !important;
+  }
+  .no-padding {
+    padding-left: 0px;
+  }
+  ion-avatar {
+    margin-right: 4px !important;
+  }
+  .player-info {}
+  .player-info ion-avatar {
+    margin: 4px
+  }
+  .player-info h6 {
+    font-size: 0.8em;
+  }
+  .item-inner {
+    padding-right: 0 !important;
+  }
+  ion-badge {
+    font-size: 0.8em !important;
+  }
+  .player-state {
+    margin: 2px !important;
+    font-size: 0.7em;
+  }
+}

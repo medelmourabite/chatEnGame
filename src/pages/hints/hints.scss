@@ -1,0 +1,15 @@
+page-hints {
+  .hints {
+    border-radius: 8px;
+    padding: 0px;
+    margin: 4px;
+    background: transparent;
+    position: absolute;
+    z-index: 100;
+  }
+  .hints ion-card {
+    border-radius: 8px;
+    color: #eee;
+    background-color: rgba(20, 20, 20, 0.9) !important;
+  }
+}

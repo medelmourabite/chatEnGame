@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Profile
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="presentPopover($event)">
+        <strong>{{notifs}}</strong>
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="transparent-header">
+
+  <div class="loading" *ngIf="!player">
+    <ion-spinner icon="dots" class="spinner-dark"></ion-spinner>
+    <h3>Loading</h3>
+  </div>
+
+  <!-- <div id="profile-bg" [ngStyle]="{'background-image': 'url(' + user.coverImage +')'}"></div> -->
+  <div id="content" *ngIf="player != null">
+    <!-- <h4 style="text-align: center">Click to change </h4> -->
+    <div id="profile-info" padding *ngIf="player.photo" (click)="changeAvatar(player.email)">
+      <img id="profile-image" [src]="player.photo">
+      <h3 id="profile-name">{{player?.name}}</h3>
+      <hr/>
+      <p class="player-email">{{player?.email}} </p>
+    </div>
+    <br/>
+    <!-- <br/> -->
+    <ion-row class="profile-numbers">
+      <ion-col col-5>
+        <p>Points</p>
+        <span>{{player?.points}}</span>
+      </ion-col>
+      <ion-col col-2>
+        <!-- <p *ngIf="player.age > 0">Age</p>
+        <span *ngIf="player.age > 0">{{player.age}}</span> -->
+      </ion-col>
+      <ion-col col-5>
+        <p>Level</p>
+        <span>{{levels[player.level ]?.name}}</span>
+        <span>/{{player?.level}}</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-range [(ngModel)]="player.points" min="0" [max]="levels[player.level]?.xp" step="1" disabled color="danger">
+          <ion-badge color="danger" range-left small>0</ion-badge>
+          <ion-badge color="secondary" range-right large>{{levels[player.level]?.xp}}</ion-badge>
+        </ion-range>
+      </ion-col>
+    </ion-row>
+  </div>
+  <hr/>
+  <!-- <ion-fab top right *ngIf="player != null && myProfile">
+    <button ion-fab color="light" mini>
+      <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list>
+      <button ion-fab (click)="share(' ')">
+        <ion-icon name="md-share"></ion-icon>
+      </button>
+      <button ion-fab (click)="share('facebook')">
+        <ion-icon name="logo-facebook"></ion-icon>
+      </button>
+      <button ion-fab (click)="share('twitter')">
+        <ion-icon name="logo-twitter"></ion-icon>
+      </button>
+      <button ion-fab (click)="share('whatsapp')">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab> -->
+  <ion-buttons *ngIf="player != null && myProfile">
+    <button ion-button full outline [color]="player?.state == 'online' ? 'secondary' : 'dark'" (click)="toggleState()">
+      {{player?.state}}
+    </button>
+  </ion-buttons>
+  <ion-buttons *ngIf="player != null && !myProfile">
+    <button ion-button full outline color="primary" *ngIf="!isFriend" (click)="addFriend()">
+      Add as a friend
+    </button>
+    <button ion-button full outline color="danger" *ngIf="isFriend" (click)="removeFriend()">
+      Remove
+    </button>
+    <button ion-button full outline color="dark" (click)="report()">
+      Report
+    </button>
+  </ion-buttons>
+
+</ion-content>

@@ -1,0 +1,130 @@
+<ion-header>
+   <ion-navbar>
+      <ion-title>
+         <ion-badge class="badge-header" color="danger" *ngIf="room && room.level">{{room?.level}}</ion-badge>
+         {{room?.name}}
+      </ion-title>
+      <ion-buttons end *ngIf="player" class="buttons-end">
+         <button ion-button>
+        <ion-badge color="secondary">{{player?.points}}/{{player?.level}}</ion-badge>
+      </button>
+         <button ion-button (click)="showActivePlayers($event)">
+        <strong>{{online}}</strong>
+        <ion-icon name="people"></ion-icon>
+      </button>
+         <button ion-button icon-only (click)="presentPopover($event, room.hostuid == player.uid)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+      </ion-buttons>
+   </ion-navbar>
+</ion-header>
+
+<ion-content #content>
+   <ion-refresher (ionRefresh)="loadMoreMessage($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="load older messages" refreshingSpinner="circles" refreshingText="Loading...">
+      </ion-refresher-content>
+   </ion-refresher>
+
+   <div class="message-wrap" *ngIf="player">
+      <div *ngFor="let message of room.messages">
+         <div class="sender" *ngIf="message.from !== player.uid && players[message.from] && message.from != chatBot.uid">
+            <ion-grid>
+               <ion-row>
+                  <ion-col col-2>
+                     <img class="friend-img" [src]="players[message.from] ? players[message.from].photo : 'assets/imgs/avatar0.jpg'" tooltip="{{players[message.from]?.name}}" positionH="left" arrow>
+                  </ion-col>
+                  <ion-col col-10>
+                     <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow>{{message.text}}</p>
+
+                     <ion-buttons left style="display: inline;" *ngIf="message.from == 'chat-bot'">
+                        <button ion-button small clear color="dark" style="margin: 0;font-size: 1.2rem;padding: 0px 2px">Chat-Bot</button>
+                     </ion-buttons>
+
+                  </ion-col>
+               </ion-row>
+            </ion-grid>
+         </div>
+
+
+         <div class="me" *ngIf="message.from === player.uid">
+            <ion-grid>
+               <ion-row>
+                  <ion-col col-10>
+                     <p class="txt" tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow>{{message.text}}</p>
+                  </ion-col>
+                  <ion-col col-2>
+                     <img class="friend-img" [src]="players[message.from] ? players[message.from].photo : 'assets/imgs/avatar0.jpg'" tooltip="{{player.name}}" positionH="left" arrow>
+                  </ion-col>
+               </ion-row>
+            </ion-grid>
+         </div>
+
+         <div class="sender chat-bot" *ngIf=" message.from == chatBot.uid">
+            <ion-grid>
+               <ion-row>
+                  <ion-col col-2>
+                     <img class="friend-img" [src]="chatBot.photo" tooltip="Chat-Bot" positionH="right" arrow>
+                  </ion-col>
+                  <ion-col col-10 [ngSwitch]="message.type">
+                     <div *ngSwitchCase="0">
+                        <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow style="display: block; width:80%">
+                           Which color?
+                           <span class="image-color" [ngStyle]="{'background': message.text}"></span>
+                        </p>
+                     </div>
+                     <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow *ngSwitchCase="1">Correct or Incorrect?
+                        <br> {{message.text}}</p>
+                     <div *ngSwitchCase="2">
+                        <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow style="display: block; width:80%">
+                           Wich animal?
+                           <img [src]="'assets/imgs/questions/' +message.text" alt="objet">
+                        </p>
+                     </div>
+                     <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow *ngSwitchCase="3">Months of the Year?
+                        <br> {{message.text}}</p>
+                     <div *ngSwitchCase="4">
+                        <p>
+                           Wich verb?
+                           <img [src]="'assets/imgs/questions/' +message.text" alt="objet">
+                        </p>
+                     </div>
+                     <div *ngSwitchCase="5">
+                        <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow style="display: block; width:80%">
+                           What do you see in this image?
+                           <img [src]="'assets/imgs/questions/' +message.text" alt="objet">
+                        </p>
+                     </div>
+                     <div *ngSwitchCase="6">
+                        <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow style="display: block; width:80%">
+                           Wich adjective?
+                           <img [src]="'assets/imgs/questions/' +message.text" alt="objet">
+                        </p>
+                     </div>
+                     <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow *ngSwitchCase="7">About, At, For or To?
+                        <br> {{message.text}}</p>
+                     <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow *ngSwitchCase="8">fill the blank space?
+                        <br> {{message.text}}</p>
+
+                     <p tooltip="{{message.date | date:'hh:mm dd/MM'}}" positionV="top" arrow *ngSwitchDefault> {{message.text}}</p>
+
+                  </ion-col>
+               </ion-row>
+            </ion-grid>
+         </div>
+
+      </div>
+   </div>
+</ion-content>
+
+
+
+<ion-footer no-border>
+   <ion-toolbar color="primary">
+      <ion-textarea class="messageText" #messageText [(ngModel)]="message.text" placeholder="Enter you message here" name="message"></ion-textarea>
+      <ion-buttons end>
+         <button (click)="sendMessage(messageText)" ion-button icon-only [disabled]="turn != player.uid && room.games && room.games.story">
+        <ion-icon name="send" color="light"></ion-icon>
+      </button>
+      </ion-buttons>
+   </ion-toolbar>
+</ion-footer>

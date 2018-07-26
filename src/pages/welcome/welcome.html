@@ -1,0 +1,73 @@
+<ion-header no-border>
+  <ion-navbar transparent>
+    <ion-buttons right>
+      <button color="light" *ngIf="slideIndex < slides.length " class="skip-button" (click)="goToApp()">SKIP</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content fullscreen="true" class="no-padding-top">
+  <ion-slides #slider [pager]="slideIndex < slides.length" autoplay="5000" (ionSlideWillChange)="onSlideChanged()">
+    <ion-slide *ngFor="let slide of slides" class="slide-background" [ngStyle]="{'background-image': 'url(' + slide.imageUrl +')'}">
+      <div class="text-wrapper">
+        <div class="slide-text">
+          <h2 class="slide-title title" [innerHTML]="slide.title"></h2>
+          <p class="description" [innerHTML]="slide.description"></p>
+          <!-- <img [src]="slide.img" style="width: 60%;"> -->
+        </div>
+      </div>
+    </ion-slide>
+    <ion-slide class="slide-background" [ngStyle]="{'background-image': 'url(assets/imgs/4.png)'}">
+      <div class="text-wrapper">
+        <div class="slide-text">
+          <h2 class="slide-title title">One more thing!</h2>
+          <h3 class="description"> You need an account</h3>
+          <div class="description">
+            <form (ngSubmit)="signup()" [formGroup]="form">
+
+              <ion-card>
+                <ion-list inset>
+
+                  <ion-item [ngClass]="{ invalid: nameErrors.hasError('*', ['touched']) }">
+                    <ion-input type="text" placeholder="Nom" formControlName="name"></ion-input>
+                  </ion-item>
+
+                  <div ngxErrors="name" #nameErrors="ngxErrors">
+                    <div class="form-error" [ngxError]="[ 'required']" [when]="['touched']">This field is required</div>
+                  </div>
+
+                  <ion-item [ngClass]="{ invalid: emailErrors.hasError('*', ['touched']) }">
+                    <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
+                  </ion-item>
+
+                  <div ngxErrors="email" #emailErrors="ngxErrors">
+                    <div class="form-error" [ngxError]="['email', 'required']" [when]="['touched']">It should be a valid email</div>
+                  </div>
+
+                  <ion-item [ngClass]="{ invalid: passwordErrors.hasError('*', ['touched']) }">
+                    <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+                  </ion-item>
+
+                  <div ngxErrors="password" #passwordErrors="ngxErrors">
+                    <div class="form-error" [ngxError]="['minlength', 'required']" [when]="['touched']">It should be at least 6 characters</div>
+                  </div>
+                </ion-list>
+              </ion-card>
+
+              <div padding-horizontal>
+                <div class="form-error">{{signupError}}</div>
+                <div class="floating-buttons pop-in">
+                  <button ion-button clear large full type="submit" [disabled]="!form.valid">Sign up</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <!-- <div class="floating-buttons pop-in" *ngIf="slideIndex >= slides.length - 1">
+    <button ion-button clear large full (click)="goToApp()">
+      Let's GO!
+    </button>
+  </div> -->
+</ion-content>

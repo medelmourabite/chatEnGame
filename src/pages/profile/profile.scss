@@ -1,0 +1,140 @@
+page-profile {
+  ion-content {
+    background: linear-gradient(0deg, #eee 0%, #eee 60%, #eee 40%); // background-image: url('../assets/imgs/background_2.jpg');
+  }
+  button,
+  ion-button,
+  .button-md,
+  .button-ios {
+    text-transform: none !important;
+  }
+  p {
+    color: #444;
+  } // Cover image
+  #profile-bg {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    margin-top: -16px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+  } // Profile content
+  #content {
+    position: relative;
+    margin-top: 100px;
+    padding-top: 100px;
+    text-align: center;
+  }
+  #profile-image {
+    display: block;
+    border-radius: 50%;
+    width: auto;
+    height: 140px;
+    margin: 0 auto 0;
+    box-shadow: 0px 11px 20px -3px rgba(142, 136, 146, 0.75);
+  }
+  #profile-info {
+    position: absolute;
+    top: -45%;
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+  }
+  #profile-name {
+    color: #444;
+    font-size: 26px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 8px;
+  }
+  .player-email {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 8px;
+    font-size: 18px;
+  }
+  .profile-description {
+    font-size: 15px;
+    color: #888;
+  }
+  .follow-button {
+    text-transform: none;
+    border-radius: 3px !important;
+    ion-icon {
+      font-weight: bold;
+      padding-left: 5px;
+      font-size: 2.5rem;
+    }
+  } // Following, Followers and all..
+  .profile-numbers {
+    p {
+      color: #444;
+      font-size: medium;
+      margin-bottom: 3px;
+    }
+    span {
+      font-weight: bold;
+      font-size: 2.4rem;
+      color: #34354c;
+    }
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background: #444;
+    background: -webkit-linear-gradient(left, hsla(0, 0%, 0%, 0) 0%, rgb(188, 198, 214) 50%, hsla(0, 0%, 0%, 0) 100%);
+  } // Posts feed
+  #posts {
+    text-align: justify;
+  }
+  .scroll-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+  }
+  .loading {
+    width: 100%;
+    margin-top: 40%;
+    text-align: center;
+  }
+  .loading ion-spinner {
+    width: 30%;
+    padding-top: 30%;
+    margin: 10px 35%; // color: red;
+  }
+  ion-spinner svg {
+    stroke: red;
+    fill: transparent;
+  }
+  $brand-color: #1568ff;
+  $tab-icon-border-top-color: $brand-color;
+  $tab-icon-bg: #FFFFFF;
+  $gray-l1: #37474F;
+  $ion-content-bg: #edf2f5;
+  .avatar-conatainer {
+    position: relative;
+    img {
+      width: 125px;
+      height: 125px;
+      border-radius: 100%;
+      border: 2px solid #eff4ff;
+    }
+    .badge {
+      position: absolute;
+      background: $brand-color;
+      border: 4px solid white;
+      padding: 14px 6px;
+      border-radius: 100%;
+      color: white;
+      font-weight: bold;
+      margin-left: -30px;
+      top: 64px;
+    }
+    .badge-notify {
+      position: absolute;
+      margin-left: 100px;
+      top: 14px;
+    }
+  }
+}

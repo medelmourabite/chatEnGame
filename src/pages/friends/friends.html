@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Friends
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="presentPopover($event)">
+        <strong>{{notifs}}</strong>
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+
+
+  <div>
+    <ion-segment [(ngModel)]="options" color="danger">
+      <ion-segment-button value="my_friends">
+        Friends </ion-segment-button>
+      <ion-segment-button value="other_players">
+        Players </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="options">
+    <div *ngSwitchCase="'my_friends'">
+      <ion-card *ngIf="!myFriends ||(myFriends && myFriends.length <= 0)">
+        <ion-card-header>
+          <h2 style="text-align: center;">
+            You don't have any friends yet
+          </h2>
+        </ion-card-header>
+        <ion-card-content>
+          <button ion-button full (click)="options = 'other_players'">
+            Click, and make friends
+          </button>
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngFor="let friend of myFriends">
+        <ion-list>
+          <ion-item-sliding #slidingfriends>
+            <ion-item #item>
+
+              <ion-avatar item-start class="image-container">
+                <img [src]="friend.photo">
+                <ion-badge class="player-level" *ngIf=" friend " color="secondary">{{friend.level}}</ion-badge>
+              </ion-avatar>
+              <h4 class="player-name">{{friend?.name}}</h4>
+              <!-- <h6>Points :&nbsp;
+                <ion-badge>{{friend?.points}}</ion-badge>
+              </h6>
+              <h6>Level &nbsp; :&nbsp;
+                <ion-badge color="danger">{{friend?.level}}</ion-badge>
+              </h6> -->
+              <div item-end>
+                <ion-badge *ngIf="friend.state == 'online'" color="secondary">Online</ion-badge>
+                <ion-badge *ngIf="friend.state != 'online'" color="dark">Offline</ion-badge>
+              </div>
+              <div item-end class="arrow-hint">
+                <ion-icon [name]="activeItemSliding == slidingfriends ? 'arrow-forward' : 'arrow-back'" (click)="openOption(slidingfriends, item, 45)"></ion-icon>
+              </div>
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="primary" (click)="visitProfile(friend.key)">
+                <ion-icon name="person"></ion-icon>
+                Profile
+              </button>
+              <button ion-button color="dark" (click)="closeOption()">
+                <ion-icon name="close"></ion-icon>
+                close
+              </button>
+            </ion-item-options>
+            <ion-item-options side="left">
+              <button ion-button color="danger" (click)="removeFriend(friend.key)">
+                <ion-icon name="trash"></ion-icon>
+                Remove
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-card>
+    </div>
+
+    <div *ngSwitchCase="'other_players'">
+      <ion-card-header>
+        <ion-searchbar (ionInput)="getPlayers($event)"></ion-searchbar>
+
+      </ion-card-header>
+      <ion-card *ngFor="let otherPlayer of items">
+        <ion-list>
+          <ion-item-sliding #slidingPlayers>
+            <ion-item #item>
+              <ion-avatar item-start class="image-container">
+                <img [src]="otherPlayer.photo">
+                <ion-badge class="player-level" *ngIf=" otherPlayer " color="secondary">{{otherPlayer.level}}</ion-badge>
+              </ion-avatar>
+
+              <h4 class="player-name">{{otherPlayer?.name}}
+              </h4>
+              <!-- <h6>Points :&nbsp;
+                    <ion-badge>{{otherPlayer.points}}</ion-badge>
+                  </h6> -->
+              <!-- <h6>Level &nbsp; :&nbsp;
+                <ion-badge color="danger">{{otherPlayer.level}}</ion-badge>
+              </h6> -->
+              <div item-end>
+                <ion-badge *ngIf="otherPlayer.state == 'online'" color="secondary">Online</ion-badge>
+                <ion-badge *ngIf="otherPlayer.state != 'online'" color="dark">Offline</ion-badge>
+              </div>
+              <div item-end class="arrow-hint">
+                <ion-icon [name]="activeItemSliding == slidingPlayers ? 'arrow-forward' : 'arrow-back'" (click)="openOption(slidingPlayers, item, 58)"></ion-icon>
+              </div>
+
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="primary" (click)="visitProfile(otherPlayer.key)">
+                <ion-icon name="person"></ion-icon>
+                Profile
+              </button>
+              <button ion-button color="secondary" (click)="addFriend(otherPlayer.key)">
+                <ion-icon name="person-add"></ion-icon>
+                Add
+              </button>
+              <button ion-button color="dark" (click)="closeOption()">
+                <ion-icon name="close"></ion-icon>
+                close
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-card>
+    </div>
+  </div>
+
+</ion-content>

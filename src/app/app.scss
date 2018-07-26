@@ -1,16 +1,179 @@
-// http://ionicframework.com/docs/theming/
+@font-face {
+  font-family: Muli_Regular;
+  src: url("../assets/fonts/muli/Muli-Regular.ttf") format("ttf");
+  font-weight: 400;
+}
 
+@font-face {
+  font-family: Ovo_Regular;
+  src: url("../assets/fonts/ovo/Ovo-Regular.ttf") format("ttf");
+  font-weight: 200;
+}
 
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+body {
+  font-family: Muli_Regular !important;
+}
+
+.title {
+  font-size: 1.1em;
+  font-style: oblique;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#app-profile-image {
+  display: block;
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 0;
+  box-shadow: 0px 11px 20px -3px rgba(142, 136, 146, 0.75);
+}
+
+.app-image-container {
+  // background: rgba(155, 37, 223, 0.8);
+  // width: 64px; // margin: 4px;
+  position: relative;
+  padding: 4px;
+  margin: 4px 16px 4px 0px !important;
+}
+
+.app-image-container img {
+  width: 100%;
+  height: 100%;
+  margin: 4px;
+}
+
+.app-player-level {
+  position: absolute;
+  z-index: 100;
+  left: 0%;
+  bottom: 0%;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-size: 1.2em;
+}
+
+.app-player-xp {
+  position: absolute;
+  z-index: 100;
+  right: 0%;
+  bottom: 0%;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-size: 1.2em;
+}
+
+.scroll-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+}
+
+.modal-wrapper {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.splash {
+  width: 100%;
+  height: 100%;
+  background: #eee;
+  .loader {
+    margin: 0 0 2em; // height: 200px;
+    width: 100%;
+    text-align: center; // padding: 1em;
+    margin: 0 auto 1em;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .logo {
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+  }
+  /*
+  Set the color of the icon
+  */
+  svg path,
+  svg rect {
+    fill: #2244ff;
+  }
+}
+
+// .splash {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   z-index: 999;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background: #2c3e50;
+// }
+//   .loader {
+//     margin: 0 0 2em; // height: 200px;
+//     width: 100%;
+//     text-align: center; // padding: 1em;
+//     margin: 0 auto 1em;
+//     display: inline-block;
+//     vertical-align: top;
+//   }
+//   .logo {
+//     margin: 0;
+//     padding: 0;
+//     width: 100% !important;
+//   }
+//   /*
+//   Set the color of the icon
+//   */
+//   svg path,
+//   svg rect {
+//     fill: #2244ff;
+//   }
+// }
+// .spinner {
+//   width: 62px;
+//   height: 62px;
+//   position: relative;
+//   margin: 100px auto;
+// }
+// .double-bounce1,
+// .double-bounce2 {
+//   width: 100%;
+//   height: 100%;
+//   border-radius: 50%;
+//   background-color: rgb(247, 242, 242);
+//   opacity: 0.6;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+//   animation: sk-bounce 2.0s infinite ease-in-out;
+// }
+// .double-bounce2 {
+//   -webkit-animation-delay: -1.0s;
+//   animation-delay: -1.0s;
+// }
+// @-webkit-keyframes sk-bounce {
+//   0%,
+//   100% {
+//     -webkit-transform: scale(0.0)
+//   }
+//   50% {
+//     -webkit-transform: scale(1.0)
+//   }
+// }
+// @keyframes sk-bounce {
+//   0%,
+//   100% {
+//     transform: scale(0.0);
+//     -webkit-transform: scale(0.0);
+//   }
+//   50% {
+//     transform: scale(1.0);
+//     -webkit-transform: scale(1.0);
+//   }
+// }

@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Adding a new room
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form (ngSubmit)="addRoom()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="room.name" name="name" required=""></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Hello message </ion-label>
+        <ion-textarea [(ngModel)]="room.description" name="description"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-range style="padding: 8px 0px;" min="0" max="{{player.level}}" step="1" snaps="true" [(ngModel)]="room.level" color="dark"
+          name="level">
+          <span range-left color="dark" name="arrow-down">Level : </span>
+          <span range-right color="dark" name="arrow-up">{{room.level}}</span>
+        </ion-range>
+      </ion-item>
+      <ion-item>
+        <button ion-button full color="secondary" type="submit">Save</button>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

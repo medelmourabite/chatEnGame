@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Chatrooms
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="presentPopover($event)">
+        <strong>{{notifs}}</strong>
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div>
+    <ion-segment [(ngModel)]="options" color="danger">
+      <ion-segment-button value="my_rooms">
+        my Chatrooms </ion-segment-button>
+      <ion-segment-button value="other_rooms">
+        More Chatrooms </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="options">
+    <div *ngSwitchCase="'my_rooms'">
+      <ion-card *ngIf="!myRooms ||(myRooms && myRooms.length <= 0)">
+        <ion-card-header>
+          <h2 style="text-align: center;">
+            You don't have any rooms yet
+          </h2>
+        </ion-card-header>
+        <ion-card-content>
+          <button ion-button full (click)="addRoom()">
+            Click, to create a room
+          </button>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="card-container" *ngFor="let room of myRooms">
+        <ion-list>
+          <ion-item-sliding #slidingItem class="room">
+            <ion-item-options side="left">
+              <button ion-button small color="danger" (click)="deleteRoom(room.key)">
+                <ion-icon name="trash"></ion-icon>
+                Delete
+              </button>
+            </ion-item-options>
+            <ion-item #item>
+              <ion-row>
+                <ion-col col-3 align-self-center class="image-container" *ngIf="players">
+                  <ion-avatar *ngIf=" players[room.hostuid] && players[room.hostuid].photo">
+                    <img [src]="players[room.hostuid]?.photo" tooltip="{{players[room.hostuid]?.name}}" positionV="top" arrow/>
+                  </ion-avatar>
+                  <ion-badge class="player-level" *ngIf=" players[room.hostuid] " color="secondary">{{players[room.hostuid].level}}</ion-badge>
+                  <ion-icon name="chatboxes" style="font-size: 2.6em" *ngIf="!players[room.hostuid] || (players[room.hostuid] && !players[room.hostuid].photo)"></ion-icon>
+                </ion-col>
+                <ion-col col-8 align-self-center>
+                  <ion-row>
+                    <h3 class="title">
+                      <ion-badge color="danger">{{room.level ? room.level : 0}}</ion-badge>
+                      {{room.name}}</h3>
+                  </ion-row>
+                  <ion-row>
+                    <div class="description">{{room.description}}</div>
+                  </ion-row>
+
+                </ion-col>
+                <ion-col col-1 align-self-center class="bg-white" (click)="openOption(slidingItem, item, 56)">
+                  <ion-icon color="dark" [name]="activeItemSliding == slidingItem ? 'arrow-forward' : 'arrow-back'"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row class="games" *ngIf="room.games">
+                <ion-col *ngIf="room.games.spellcheck">
+                  <button ion-button small full color="dark" (click)="showTips('spellcheck')" style="padding: 0px 2px; margin: 0;">Spell Cheking</button>
+                </ion-col>
+                <ion-col *ngIf="room.games.quiz">
+                  <button ion-button small full color="dark" (click)="showTips('quiz')" style="padding: 0px 2px; margin: 0;">Quiz</button>
+                </ion-col>
+                <ion-col *ngIf="room.games.story">
+                  <button ion-button small full color="dark" (click)="showTips('story')" style="padding: 0px 2px; margin: 0;">Improv Story</button>
+                </ion-col>
+                <ion-col *ngIf="room.games.startWithEnd">
+                  <button ion-button small full color="dark" (click)="showTips('startWithEnd')" style="padding: 0px 2px; margin: 0;">Last {{room.games.startWithEnd}} </button>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button small color="primary" (click)="joinRoom(room.key)">
+                <ion-icon name="folder-open"></ion-icon>
+                Enter
+              </button>
+              <button ion-button small color="secondary" (click)="inviteFriends(room.key, room.level)">
+                <ion-icon name="person-add"></ion-icon>
+                Invite
+              </button>
+              <button ion-button small color="dark" (click)="closeOption()">
+                <ion-icon name="close"></ion-icon>
+                Close
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-card>
+    </div>
+
+
+    <div *ngSwitchCase="'other_rooms'">
+      <ion-card-header>
+        <ion-searchbar (ionInput)="getRooms($event)"></ion-searchbar>
+      </ion-card-header>
+      <ion-card class="card-container" *ngFor="let room of items">
+        <ion-list>
+          <ion-item-sliding #slidingItem class="room">
+            <ion-item #item>
+              <ion-row>
+                <ion-col col-3 align-self-center class="image-container" *ngIf="players">
+                  <ion-avatar *ngIf="players[room.hostuid] && players[room.hostuid].photo">
+                    <img [src]="players[room.hostuid]?.photo" tooltip="{{players[room.hostuid]?.name}}" positionV="top" arrow/>
+                  </ion-avatar>
+                  <ion-badge class="player-level" *ngIf=" players[room.hostuid] " color="secondary">{{players[room.hostuid].level}}</ion-badge>
+                  <ion-icon name="chatboxes" style="font-size: 2.6em" *ngIf="!players[room.hostuid] || (players[room.hostuid] && !players[room.hostuid].photo)"></ion-icon>
+                </ion-col>
+                <ion-col col-8 align-self-center>
+                  <ion-row>
+                    <h3 class="title">
+                      <ion-badge color="danger">{{room.level ? room.level : 0}}</ion-badge>
+                      {{room.name}}</h3>
+                  </ion-row>
+                  <ion-row>
+                    <div class="description">{{room.description}}</div>
+                  </ion-row>
+
+                </ion-col>
+                <ion-col col-1 align-self-center class="bg-white" (click)="openOption(slidingItem, item, 40)">
+                  <ion-icon color="dark" [name]="activeItemSliding == slidingItem ? 'arrow-forward' : 'arrow-back'"></ion-icon>
+                </ion-col>
+              </ion-row>
+              <ion-row class="games" *ngIf="room.games">
+                <ion-col *ngIf="room.games.spellcheck">
+                  <button ion-button small full color="dark" (click)="showTips('spellcheck')" style="padding: 0px 2px; margin: 0;">Spell Cheking</button>
+                </ion-col>
+                <ion-col *ngIf="room.games.quiz">
+                  <button ion-button small full color="dark" (click)="showTips('quiz')" style="padding: 0px 2px; margin: 0;">Quiz</button>
+                </ion-col>
+                <ion-col *ngIf="room.games.story">
+                  <button ion-button small full color="dark" (click)="showTips('story')" style="padding: 0px 2px; margin: 0;">Improv Story</button>
+                </ion-col>
+                <ion-col *ngIf="room.games.startWithEnd">
+                  <button ion-button small full color="dark" (click)="showTips('startWithEnd')" style="padding: 0px 2px; margin: 0;">Last {{room.games.startWithEnd}} </button>
+                </ion-col>
+              </ion-row>
+
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button small color="primary" (click)="joinRoom(room.key)">
+                <ion-icon name="folder-open"></ion-icon>
+                Enter
+              </button>
+              <button ion-button small color="dark" (click)="closeOption()">
+                <ion-icon name="close"></ion-icon>
+                Close
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-card>
+    </div>
+  </div>
+
+  <ion-fab right bottom>
+    <button ion-fab color="danger" (click)="addRoom()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

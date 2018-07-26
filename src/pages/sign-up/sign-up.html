@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Inscription</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form (ngSubmit)="signup()" [formGroup]="form">
+    <ion-list inset>
+      <ion-item [ngClass]="{ invalid: nameErrors.hasError('*', ['touched']) }">
+        <ion-input type="text" placeholder="Nom" formControlName="name"></ion-input>
+      </ion-item>
+
+      <div ngxErrors="name" #nameErrors="ngxErrors">
+        <div class="form-error" [ngxError]="[ 'required']" [when]="['touched']">Ce champ est indispensable</div>
+      </div>
+
+      <ion-item [ngClass]="{ invalid: ageErrors.hasError('*', ['touched']) }">
+        <ion-input type="number" placeholder="Age" formControlName="age" min=12 max=99></ion-input>
+      </ion-item>
+
+      <div ngxErrors="age" #ageErrors="ngxErrors">
+        <div [ngxError]="['max', 'min', 'required']" [when]="['touched']">LL'age doit etre compris ente 11 et 100</div>
+      </div>
+
+      <ion-item [ngClass]="{ invalid: emailErrors.hasError('*', ['touched']) }">
+        <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <div ngxErrors="email" #emailErrors="ngxErrors">
+        <div [ngxError]="['email', 'required']" [when]="['touched']">It should be a valid email</div>
+      </div>
+
+      <ion-item [ngClass]="{ invalid: passwordErrors.hasError('*', ['touched']) }">
+        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      </ion-item>
+
+      <div ngxErrors="password" #passwordErrors="ngxErrors">
+        <div [ngxError]="['minlength', 'required']" [when]="['touched']">It should be at least 6 characters</div>
+      </div>
+    </ion-list>
+
+    <div padding-horizontal>
+      <div class="form-error">{{signupError}}</div>
+
+      <button ion-button full type="submit" [disabled]="!form.valid">Sign up</button>
+    </div>
+  </form>
+</ion-content>

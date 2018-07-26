@@ -1,0 +1,50 @@
+page-friends {
+  ion-content {
+    background: linear-gradient(0deg, #eee 0%, #eee 60%, #eee 40%); // background-image: url('../assets/imgs/background_2.jpg');
+  }
+  .card-header-md {
+    font-size: 1.2rem;
+    color: #222;
+    padding: 4px;
+  }
+  .image-container {
+    // background: rgba(155, 37, 223, 0.8);
+    width: 64px; // margin: 4px;
+    position: relative;
+    padding: 4px;
+    margin: 4px 16px 4px 0px !important;
+  }
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    margin: 4px;
+  }
+  .player-level {
+    position: absolute;
+    z-index: 100;
+    left: 0%;
+    bottom: 0%;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    font-size: 1em;
+  }
+  .swipLeft {
+    transition: 1s;
+    transform: translateX(-100%);
+  }
+  .player-name {
+    font-size: 1.1em; // font-style: oblique;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; // font-weight: 500;
+    // font-style: oblique;
+    white-space: normal !important;
+  } // .arrow-hint {
+  //   transition: 1s;
+  //   transform: translateX(-20%);
+  //   transition: 1s;
+  //   transform: translateX(0%);
+  //   transition: 1s;
+  //   transform: translateX(20%);
+  //   transition: 1s;
+  //   transform: translateX(0%);
+  // }
+}

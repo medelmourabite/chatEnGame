@@ -1,0 +1,78 @@
+<div class="no-padding">
+  <ion-list>
+    <ion-item-divider>Online</ion-item-divider>
+
+    <ion-item-sliding *ngFor="let player of players">
+      <ion-item class="player-info">
+        <ion-avatar item-start>
+          <img [src]="player?.photo">
+        </ion-avatar>
+        <h4>{{player?.name}} </h4>
+        <div item-end class="player-state">
+          <ion-badge>{{player?.points}}/{{player?.level}}</ion-badge> XP
+          <br>
+          <ion-badge color="danger">{{player.reports? player.reports.length : 0}}</ion-badge> reports
+        </div>
+
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button small color="primary" (click)="visitProfile(player.uid)">
+          <ion-icon name="person"></ion-icon>
+          Profile
+        </button>
+        <button ion-button small color="secondary" *ngIf="( playerUid != player.uid)" (click)="report(player.uid)">
+          <ion-icon name="alert"></ion-icon>
+          report
+        </button>
+        <button ion-button small color="danger" *ngIf="isHost && ( playerUid != player.uid)" (click)="removeFromRoom(player.uid)">
+          <ion-icon name="remove"></ion-icon>
+          Remove
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-divider>Banned players</ion-item-divider>
+
+    <ion-item-sliding *ngFor="let player of bannedPlayers">
+      <ion-item class="player-info">
+        <ion-avatar item-start>
+          <img [src]="player?.photo">
+        </ion-avatar>
+        <h4>{{player?.name}} </h4>
+        <!-- <h6>
+          XP:
+          <ion-badge>{{player?.points}}/{{player?.level}}</ion-badge>
+        </h6>
+        <h6>Reports:
+          <ion-badge color="danger">{{player.reports? player.reports.length : 0}}</ion-badge>
+        </h6> -->
+        <div item-end class="player-state">
+          <ion-badge>{{player?.points}}/{{player?.level}}</ion-badge> XP
+          <br>
+          <ion-badge color="danger">{{player.reports? player.reports.length : 0}}</ion-badge> reports
+          <br>
+          <ion-badge *ngIf="player.state == 'online'" color="secondary">Online</ion-badge>
+          <ion-badge *ngIf="player.state != 'online'" color="dark">Offline</ion-badge>
+        </div>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button small color="primary" (click)="visitProfile(player.uid)">
+          <ion-icon name="person"></ion-icon>
+          Profile
+        </button>
+        <button ion-button small color="secondary" *ngIf="isHost" (click)="cancelBanne(player.uid)">
+          <ion-icon name="alert"></ion-icon>
+          Cancel
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-buttons end>
+      <button ion-button outline small full color="dark" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+        Dismiss
+      </button>
+    </ion-buttons>
+  </ion-list>
+</div>

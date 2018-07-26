@@ -1,0 +1,17 @@
+page-invitations {
+  .no-padding {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+  .seen {
+    background: #ccd;
+  }
+  .list-header-md {}
+  .label-md {
+    margin: 0 !important;
+  }
+  ion-item {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}

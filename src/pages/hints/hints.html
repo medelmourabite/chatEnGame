@@ -1,0 +1,18 @@
+<div class="hints" [ngStyle]="position">
+  <ion-card color="dark">
+    <ion-card-header>
+      <ion-card-title>
+        {{hint.title}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p style="font-size: 18px;">{{hint.message}}</p>
+      <button ion-button small full round color="light" (click)="close()">
+        Dismiss
+      </button>
+      <!-- <button ion-button full round color="danger" (click)="dontShowAgain()">
+        Don't show again
+      </button> -->
+    </ion-card-content>
+  </ion-card>
+</div>

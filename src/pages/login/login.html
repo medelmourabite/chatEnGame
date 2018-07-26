@@ -1,0 +1,66 @@
+<div class="content" fullscreen="true">
+  <!-- [ngStyle]="{'background-image': 'url(../../assets/imgs/background_1.jpg)'}" -->
+
+
+  <ion-card class="card-login">
+    <ion-card-header text-center>
+      <h1>
+        Welcome to
+      </h1>
+      <!-- <h1>Chat Eng Game</h1> -->
+    </ion-card-header>
+    <div class="logo" align-self-center>
+      <img style="width: 100%" src="assets/imgs/logo.png">
+    </div>
+    <form (ngSubmit)="login()" [formGroup]="loginForm">
+      <ion-list inset>
+
+        <ion-item [ngClass]="{ invalid: emailErrors.hasError('*', ['touched', 'dirty']) }">
+          <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
+        </ion-item>
+
+        <div ngxErrors="email" #emailErrors="ngxErrors">
+          <div [ngxError]="['email', 'required']" [when]="['touched', 'dirty']" class="form-error">It should be a valid email</div>
+        </div>
+
+        <ion-item [ngClass]="{ invalid: passwordErrors.hasError('*', ['touched']) }">
+          <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+        </ion-item>
+
+        <div ngxErrors="password" #passwordErrors="ngxErrors" class="form-error">
+          <div [ngxError]="['minlength', 'required']" [when]="['touched']" class="form-error">It should be at least 5 characters</div>
+        </div>
+      </ion-list>
+
+      <div padding-horizontal>
+        <div class="form-error">{{loginError}}</div>
+
+        <button ion-button full type="submit" [disabled]="!loginForm.valid">Log in</button>
+
+        <ion-list>
+
+          <!-- <button ion-button icon-left block clear (click)="loginWithGoogle()">
+            <ion-icon name="logo-google"></ion-icon>
+            Log in with Google
+          </button> -->
+
+          <button ion-button icon-left block clear (click)="takeAtour()">
+            <ion-icon name="person-add"></ion-icon>
+            You are new
+            <!-- <br>
+            <small>Then create an account</small> -->
+          </button>
+        </ion-list>
+      </div>
+    </form>
+    <!-- <button ion-button icon-left block outline large round (click)="loginWithGoogle()">
+      <ion-icon name="logo-google"></ion-icon>
+      Log in with Google
+    </button>
+    <button ion-button icon-left block outline large round (click)="loginWithFacebook()">
+      <ion-icon name="logo-facebook"></ion-icon>
+      Log in with Facebook
+    </button> -->
+  </ion-card>
+
+</div>

@@ -1,0 +1,19 @@
+<div class="tips">
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let tip of gameTips; let i = index" text-wrap>
+          <span item-start>
+            <ion-badge color="secondary">{{(i + 1)}}</ion-badge>
+          </span>
+          <p>{{tip}}</p>
+        </ion-item>
+        <ion-item>
+          <button ion-button full round color="danger" (click)="close()">
+            Dismiss
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</div>

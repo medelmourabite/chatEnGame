@@ -1,0 +1,30 @@
+page-login {
+  .card-login {
+    // padding: 5%;
+    border-radius: 24px;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .content {
+    padding: 5%;
+    width: 100%;
+    height: 100%;
+	margin: 0;
+    background: linear-gradient(rgb(200, 200, 220));
+    display: table;
+    position: absolute;
+  }
+  .logo {
+    margin: 0% 20% 10% 20% !important;
+  }
+  button {
+    margin: auto 10px;
+  }
+  .text-input-md {
+    text-align: center !important;
+  }
+  .form-error {
+    text-align: center;
+  }
+}
